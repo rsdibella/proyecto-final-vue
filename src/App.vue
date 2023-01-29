@@ -1,15 +1,27 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link> |
-    <router-link to="/products">Products</router-link>
-  </nav>
+  <!-- <nav>
+  <router-link to="/">Home</router-link> |
+  <router-link to="/about">About</router-link> |
+  <router-link to="/products">Products</router-link>
+  </nav> -->
+  <NavBar />
   <router-view />
 </template>
 
+<script lang="ts">
+import { defineComponent } from "vue";
+import NavBar from "./components/NavBar.vue";
+
+export default defineComponent({
+  name: "AppComponent",
+  components: {
+    NavBar,
+  },
+});
+</script>
+
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -17,7 +29,8 @@
 }
 
 nav {
-  padding: 30px;
+  text-align: center;
+  background-color: #d9ddd5;
 }
 
 nav a {
@@ -26,6 +39,12 @@ nav a {
 }
 
 nav a.router-link-exact-active {
-  color: #42b983;
+  color: #e0dbe1;
+}
+body {
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
 }
 </style>

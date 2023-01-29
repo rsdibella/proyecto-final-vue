@@ -1,55 +1,52 @@
+<!-- <div class="product-holder">
+    <div class="loading" v-if="isLoading">Cargando...</div>
+    <div class="product-list" v-else>
+      <ProductItem
+        v-for="product in products"
+        :key="product.id"
+        :product="product"
+        @goDetail="goDetail"
+    />
+  </div> -->
 <template>
-  <div>
-    <h1>{{ `${msg}: ${products.length}` }}</h1>
-    <ul>
-      <li v-for="product in products" :key="product.id">
-        <ProductItem :msg="product.title" />
-      </li>
-    </ul>
+  <div class="product-holder">
+    <div class="loading" v-if="isLoading">Cargando...</div>
+    <div class="product-list" v-else>
+      <ProductItem
+        v-for="product in products"
+        :key="product.id"
+        :product="product"
+        @goGoDetail="goDetail"
+      />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent } from "vue";
 import ProductItem from "@/components/ProductItem.vue";
-
-interface Product {
-  id: number;
-  title: string;
-  price: number;
-  inventory: number;
-}
+import { Product } from "@/models/product";
+import useProducts from "../composables/useProducts";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "ProductList",
-  props: {
-    msg: String,
-  },
   components: {
     ProductItem,
   },
   setup() {
-    const products: Array<Product> = [
-      {
-        id: 1,
-        title: "iPad 4 Mini",
-        price: 500.01,
-        inventory: 2,
+    const { products, fetchProducts, isLoading } = useProducts();
+    const router = useRouter();
+
+    fetchProducts();
+
+    return {
+      products,
+      isLoading,
+      goDetail: (product: Product) => {
+        router.push({ name: "detail", params: { id: product.id } });
       },
-      {
-        id: 2,
-        title: "H&M T-Shirt White",
-        price: 10.99,
-        inventory: 10,
-      },
-      {
-        id: 3,
-        title: "Charli XCX - Sucker CD",
-        price: 19.99,
-        inventory: 5,
-      },
-    ];
-    return { products };
+    };
   },
 });
 </script>

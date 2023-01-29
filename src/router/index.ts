@@ -1,17 +1,33 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import ProductsView from "../views/ProductsView.vue";
+import DetailView from "../views/DetailView.vue";
+import haveAuthGuard from "./auth-guard";
+import ProfileView from "../views/ProfileView.vue";
+import LoginView from "../views/LoginView.vue";
 
 const routes: Array<RouteRecordRaw> = [
+  {
+    path: "/login",
+    name: "login",
+    component: LoginView,
+  },
   {
     path: "/",
     name: "home",
     component: HomeView,
   },
   {
+    beforeEnter: [haveAuthGuard],
     path: "/products",
     name: "products",
     component: ProductsView,
+  },
+  {
+    beforeEnter: [haveAuthGuard],
+    path: "/profile",
+    name: "profile",
+    component: ProfileView,
   },
   {
     path: "/about",
@@ -21,6 +37,16 @@ const routes: Array<RouteRecordRaw> = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+  },
+  {
+    beforeEnter: [haveAuthGuard],
+    path: "/products/:id",
+    name: "detail",
+    component: DetailView,
+    props: (route) => {
+      const id = Number(route.params.id);
+      return isNaN(id) ? { id: null } : { id };
+    },
   },
 ];
 
