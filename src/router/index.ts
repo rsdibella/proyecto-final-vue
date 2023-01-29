@@ -2,7 +2,6 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import ProductsView from "../views/ProductsView.vue";
 import DetailView from "../views/DetailView.vue";
-import haveAuthGuard from "./auth-guard";
 import ProfileView from "../views/ProfileView.vue";
 import LoginView from "../views/LoginView.vue";
 
@@ -18,13 +17,11 @@ const routes: Array<RouteRecordRaw> = [
     component: HomeView,
   },
   {
-    beforeEnter: [haveAuthGuard],
     path: "/products",
     name: "products",
     component: ProductsView,
   },
   {
-    beforeEnter: [haveAuthGuard],
     path: "/profile",
     name: "profile",
     component: ProfileView,
@@ -39,7 +36,6 @@ const routes: Array<RouteRecordRaw> = [
       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
   },
   {
-    beforeEnter: [haveAuthGuard],
     path: "/products/:id",
     name: "detail",
     component: DetailView,

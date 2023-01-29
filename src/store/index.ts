@@ -11,14 +11,14 @@ export default createStore<IState>({
     authUser: null,
   },
   getters: {
-    // userProfile(state) {
-    //   return state.authUser
-    // }
+    userProfile(state) {
+      return state.authUser;
+    },
   },
   mutations: {
-    // logIn(state, user: User){
-    //   state.authUser = user;
-    // }
+    logIn(state, user: User) {
+      state.authUser = user;
+    },
   },
   actions: {},
   modules: {
